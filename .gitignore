@@ -1,0 +1,74 @@
+
+
+# ===============================
+# Rust
+# ===============================
+
+/target
+**/*.rs.bk
+
+# Cargo.lock
+# Keep Cargo.lock for applications to ensure reproducible builds
+# (BranchFlow is an application workspace)
+# If this repository ever becomes a pure library workspace,
+# this rule can be reconsidered.
+# Cargo.lock
+
+
+# ===============================
+# OS files
+# ===============================
+
+.DS_Store
+Thumbs.db
+
+
+# ===============================
+# Logs
+# ===============================
+
+*.log
+
+
+# ===============================
+# IDE / Editors
+# ===============================
+
+.vscode/
+.idea/
+*.iml
+
+
+# ===============================
+# Environment files
+# ===============================
+
+.env
+.env.local
+.env.*.local
+
+
+# ===============================
+# Tauri / GUI builds
+# ===============================
+
+src-tauri/target
+src-tauri/.cargo
+
+
+# ===============================
+# Temporary files
+# ===============================
+
+tmp/
+temp/
+*.tmp
+
+
+# ===============================
+# Coverage / profiling
+# ===============================
+
+coverage/
+*.profraw
+*.profdata

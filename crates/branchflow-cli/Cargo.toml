@@ -1,0 +1,19 @@
+[package]
+name = "branchflow-cli"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Command line interface for BranchFlow"
+
+[[bin]]
+name = "branchflow"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true }
+
+branchflow-core = { path = "../branchflow-core" }
+branchflow-git = { path = "../branchflow-git" }
+
+clap = { version = "4", features = ["derive"] }

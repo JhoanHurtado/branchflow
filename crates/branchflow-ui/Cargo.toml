@@ -1,0 +1,20 @@
+[package]
+name = "branchflow-ui"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Graphical user interface layer for BranchFlow"
+repository = "https://github.com/your-org/branchflow"
+
+[lib]
+name = "branchflow_ui"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true }
+
+branchflow-core = { path = "../branchflow-core" }
+
+[dev-dependencies]
+pretty_assertions = "1"

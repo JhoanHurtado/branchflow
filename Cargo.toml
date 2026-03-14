@@ -1,0 +1,20 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "crates/branchflow-core",
+    "crates/branchflow-git",
+    "crates/branchflow-cli",
+    "crates/branchflow-ui"
+]
+
+[workspace.package]
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/jhoanhurtado/branchflow"
+
+[workspace.dependencies]
+git2 = "0.18"
+anyhow = "1"
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }
