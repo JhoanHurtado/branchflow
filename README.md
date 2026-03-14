@@ -20,11 +20,6 @@ a consistent experience across Linux, macOS and Windows.
 - Branch management
 - Interactive commit graph
 - GitHub Pull Request integration
-# BranchFlow
-
-BranchFlow is a fast and intuitive Git client designed to make working with repositories easier and more visual.
-
-Built with Rust and powered by libgit2, BranchFlow aims to provide a consistent and reliable experience across Linux, macOS, and Windows.
 
 ## Vision
 
