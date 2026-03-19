@@ -1,6 +1,3 @@
-
-
-
 # BranchFlow Architecture
 
 ## Overview
@@ -32,9 +29,13 @@ This structure ensures that the Git logic remains reusable and that new interfac
                            |
                     +------+------+
                     | branchflow- |
-                    |    core     |
+                    |     app     |
                     +------+------+
                            |
+                    +------+------+
+                    | branchflow- |
+                    |     core    |
+                    +------+------+
                            |
                     +------+------+
                     | branchflow- |
@@ -90,23 +91,26 @@ This crate acts as a bridge between the Git storage layer (`libgit2`) and the do
 
 ---
 
-## Application Layer
+## Application Layer (branchflow-app)
 
-The Application Layer acts as an orchestration layer between the Core Engine and the interfaces.
+The Application Layer is implemented in the `branchflow-app` crate and acts as the orchestration layer between the domain logic and the external interfaces (CLI and GUI).
+
+This layer coordinates operations between the Core Domain (`branchflow-core`) and the Git backend (`branchflow-git`). It exposes high‑level operations that represent real user workflows rather than low‑level Git operations.
 
 Responsibilities:
 
 - Coordinating operations between components
-- Exposing high-level commands
+- Exposing high‑level application commands
 - Managing application state
-- Handling workflows such as commits, branch changes, and history navigation
+- Implementing repository workflows
 
-Example operations handled by this layer:
+Example workflows handled by this layer:
 
 - Commit workflow
 - Branch switching
 - History queries
 - Repository initialization
+- Staging and committing changes
 
 ---
 
@@ -198,10 +202,13 @@ branchflow
 │
 ├─ crates
 │   ├─ branchflow-core
-│   │   └─ Core domain models and repository logic
+│   │   └─ Core domain models
 │   │
 │   ├─ branchflow-git
 │   │   └─ Git backend built on top of libgit2
+│   │
+│   ├─ branchflow-app
+│   │   └─ Application layer orchestrating workflows
 │   │
 │   ├─ branchflow-cli
 │   │   └─ Command line interface

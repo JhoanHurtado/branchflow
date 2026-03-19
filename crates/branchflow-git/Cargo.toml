@@ -4,15 +4,23 @@ version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Git backend implementation for BranchFlow using libgit2"
-repository = "https://github.com/your-org/branchflow"
+repository = "https://github.com/jhoanhurtado/branchflow"
 
 [dependencies]
+# Git backend
 git2 = { workspace = true }
-anyhow = { workspace = true }
-thiserror = { workspace = true }
-serde = { workspace = true }
 
+# Workspace utilities
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+
+# Domain layer
 branchflow-core = { path = "../branchflow-core" }
 
 [dev-dependencies]
 pretty_assertions = "1"
+branchflow-git = { path = "."}
+
+[features]
+default = []

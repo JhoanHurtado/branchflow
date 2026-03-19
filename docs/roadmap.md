@@ -8,8 +8,9 @@ The goal of the roadmap is to guide development from a minimal usable Git client
 
 BranchFlow is organized as a Rust workspace composed of several crates:
 
-- `branchflow-core` – domain logic and repository model
+- `branchflow-core` – domain models and repository abstractions
 - `branchflow-git` – Git backend built on top of libgit2
+- `branchflow-app` – application layer coordinating workflows
 - `branchflow-cli` – command line interface
 - `branchflow-ui` – backend layer for the graphical interface
 
@@ -18,12 +19,13 @@ The roadmap is divided into the following phases:
 1. Git Backend Foundation
 2. Read‑Only Repository Model
 3. Commit Graph Engine
-4. CLI (Read‑Only)
-5. Repository Mutations
-6. Graphical Interface
-7. Advanced Git Workflows
-8. Remote Git Support
-9. Hosting Platform Integrations
+4. Application Layer
+5. CLI (Read‑Only)
+6. Repository Mutations
+7. Graphical Interface
+8. Advanced Git Workflows
+9. Remote Git Support
+10. Hosting Platform Integrations
 
 ---
 
@@ -124,7 +126,38 @@ BranchFlow can efficiently traverse and visualize repository history.
 
 ---
 
-# Phase 4 — CLI (Read‑Only)
+# Phase 4 — Application Layer
+
+Goal: Introduce the orchestration layer that connects the domain model, Git backend, and external interfaces.
+
+Crate involved:
+
+```
+branchflow-app
+```
+
+Responsibilities:
+
+- Coordinate operations between `branchflow-core` and `branchflow-git`
+- Expose high-level workflows used by CLI and GUI
+- Provide a stable API for interfaces
+- Handle repository-level operations
+
+Example operations:
+
+- open_repository
+- get_status
+- get_log
+- list_branches
+- resolve_head
+
+Milestone:
+
+A stable application service layer exists that both CLI and GUI can use without directly depending on Git internals.
+
+---
+
+# Phase 5 — CLI (Read‑Only)
 
 Goal: Provide a minimal CLI for inspecting repositories.
 
@@ -151,7 +184,39 @@ BranchFlow CLI can inspect repositories and display history information.
 
 ---
 
-# Phase 6 — Graphical Interface
+# Phase 6 — Repository Mutations
+
+Goal: Allow BranchFlow to modify repositories.
+
+Crates involved:
+
+```
+branchflow-app
+branchflow-core
+branchflow-git
+```
+
+Features:
+
+- stage files
+- unstage files
+- create commits
+- amend commits
+- basic branch creation and deletion
+
+Design constraints:
+
+- mutations must go through the application layer
+- the core domain must remain independent from libgit2
+- operations should be transactional where possible
+
+Milestone:
+
+BranchFlow can perform basic Git write operations such as staging files and creating commits.
+
+---
+
+# Phase 7 — Graphical Interface
 
 Goal: Provide a graphical interface for visualizing repositories.
 
@@ -182,7 +247,7 @@ Users can explore repositories visually and create commits through the GUI.
 
 ---
 
-# Phase 7 — Advanced Git Workflows
+# Phase 8 — Advanced Git Workflows
 
 Goal: Support real-world Git workflows.
 
@@ -206,7 +271,7 @@ BranchFlow supports typical development workflows.
 
 ---
 
-# Phase 8 — Remote Git Support
+# Phase 9 — Remote Git Support
 
 Goal: Support interaction with remote repositories.
 
@@ -224,7 +289,7 @@ BranchFlow can synchronize repositories with remote Git servers.
 
 ---
 
-# Phase 9 — Hosting Platform Integrations
+# Phase 10 — Hosting Platform Integrations
 
 Goal: Integrate with Git hosting platforms.
 

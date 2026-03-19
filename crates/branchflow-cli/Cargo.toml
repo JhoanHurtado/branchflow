@@ -13,7 +13,12 @@ path = "src/main.rs"
 anyhow = { workspace = true }
 serde = { workspace = true }
 
-branchflow-core = { path = "../branchflow-core" }
-branchflow-git = { path = "../branchflow-git" }
+# Application layer (CLI should talk to the app layer, not directly to core/git)
+branchflow-app = { path = "../branchflow-app" }
 
+# CLI framework
 clap = { version = "4", features = ["derive"] }
+
+# Logging
+log = { workspace = true }
+env_logger = "0.11"

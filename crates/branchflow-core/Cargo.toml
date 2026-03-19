@@ -4,12 +4,14 @@ version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Core domain logic for BranchFlow"
-repository = "https://github.com/your-org/branchflow"
+repository = "https://github.com/jhoanhurtado/branchflow"
 
 [dependencies]
-anyhow = { workspace = true }
 thiserror = { workspace = true }
-serde = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
 
 [dev-dependencies]
 pretty_assertions = "1"
+
+[features]
+default = []

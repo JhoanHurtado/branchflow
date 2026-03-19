@@ -1,0 +1,21 @@
+[package]
+name = "branchflow-app"
+version = "0.1.0"
+edition = "2021"
+authors = ["BranchFlow Contributors"]
+description = "Application layer coordinating workflows between core domain and Git backend."
+license = "Apache-2.0"
+repository = "https://github.com/USER/branchflow"
+readme = "../../README.md"
+
+[lib]
+name = "branchflow_app"
+path = "src/lib.rs"
+
+[dependencies]
+branchflow-core = { path = "../branchflow-core" }
+branchflow-git = { path = "../branchflow-git" }
+
+anyhow = "1"
+thiserror = "1"
+log = "0.4"

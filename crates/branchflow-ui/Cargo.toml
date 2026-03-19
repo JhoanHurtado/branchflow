@@ -4,17 +4,24 @@ version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Graphical user interface layer for BranchFlow"
-repository = "https://github.com/your-org/branchflow"
+repository = "https://github.com/jhoanhurtado/branchflow"
 
 [lib]
 name = "branchflow_ui"
 path = "src/lib.rs"
 
 [dependencies]
+# Workspace utilities
 anyhow = { workspace = true }
-serde = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+log = { workspace = true }
+thiserror = { workspace = true }
 
-branchflow-core = { path = "../branchflow-core" }
+# Application layer (UI should talk to the app layer)
+branchflow-app = { path = "../branchflow-app" }
 
 [dev-dependencies]
 pretty_assertions = "1"
+
+[features]
+default = []

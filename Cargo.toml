@@ -2,6 +2,7 @@
 resolver = "2"
 
 members = [
+    "crates/branchflow-app",
     "crates/branchflow-core",
     "crates/branchflow-git",
     "crates/branchflow-cli",
@@ -10,11 +11,21 @@ members = [
 
 [workspace.package]
 edition = "2021"
+version = "0.1.0"
+authors = ["Jhoan Hurtado"]
 license = "Apache-2.0"
 repository = "https://github.com/jhoanhurtado/branchflow"
 
 [workspace.dependencies]
+# Dependencias externas
 git2 = "0.18"
 anyhow = "1"
 thiserror = "1"
+log = "0.4"          # <--- Esto soluciona tu error actual
 serde = { version = "1", features = ["derive"] }
+tempfile = "3"       # Muy útil para tus tests con repositorios temporales
+
+# Dependencias internas (Para que las crates se vean entre sí y los tests las vean)
+branchflow-core = { path = "crates/branchflow-core" }
+branchflow-git = { path = "crates/branchflow-git" }
+branchflow-app = { path = "crates/branchflow-app" }
