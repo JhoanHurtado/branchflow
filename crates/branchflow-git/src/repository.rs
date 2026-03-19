@@ -3,19 +3,25 @@ use git2::Repository;
 use std::path::Path;
 
 pub struct GitRepository {
-    inner: Repository,
+    pub(crate) inner: Repository,
 }
 
 impl GitRepository {
     /// Abre un repositorio existente en la ruta dada.
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, GitError> {
-        let repo = Repository::open(path)?;
+        let repo = Repository::open(path).map_err(GitError::from)?;
+        Ok(Self { inner: repo })
+    }
+
+    /// Clona un repositorio remoto en la ruta dada.
+    pub fn clone<P: AsRef<Path>>(url: &str, path: P) -> Result<Self, GitError> {
+        let repo = Repository::clone(url, path).map_err(GitError::from)?;
         Ok(Self { inner: repo })
     }
 
     /// Inicializa un nuevo repositorio.
     pub fn init<P: AsRef<Path>>(path: P) -> Result<Self, GitError> {
-        let repo = Repository::init(path)?;
+        let repo = Repository::init(path).map_err(GitError::from)?;
         Ok(Self { inner: repo })
     }
 
@@ -35,16 +41,14 @@ impl GitRepository {
         self.inner.workdir()
     }
 
-    /// Devuelve el ID (SHA) del commit al que apunta HEAD.
-    /// Útil para tests y para obtener el punto de partida.
-    pub fn get_head_id(&self) -> Result<String, GitError> {
-        let head = self.inner.head()?;
-        let target = head.target().ok_or_else(|| GitError::NotFound("HEAD has no target".into()))?;
-        Ok(target.to_string())
+    /// Devuelve la referencia HEAD del repositorio.
+    pub fn head(&self) -> Result<git2::Reference<'_>, GitError> {
+        self.inner.head().map_err(GitError::from)
     }
 
-    /// Acceso interno para otros módulos de la misma crate
-    pub(crate) fn get_inner(&self) -> &Repository {
-        &self.inner
+    /// Devuelve el commit actual apuntado por HEAD.
+    pub fn head_commit(&self) -> Result<git2::Commit<'_>, GitError> {
+        let head = self.inner.head().map_err(GitError::from)?;
+        head.peel_to_commit().map_err(GitError::from)
     }
 }

@@ -1,4 +1,4 @@
-/*!
+/*
 BranchFlow Git Backend
 
 This crate provides the **Git adapter layer** for BranchFlow. It is responsible
@@ -18,8 +18,12 @@ pub mod commits;
 pub mod branches;
 pub mod index;
 pub mod working_tree;
+pub mod operations;
+pub mod remote;
 pub mod errors;
 
 // Re-export the main repository adapter
 pub use repository::GitRepository;
 pub use errors::GitError;
+pub use operations::*;
+pub use remote::*;

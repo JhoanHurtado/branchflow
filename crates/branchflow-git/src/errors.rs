@@ -7,4 +7,13 @@ pub enum GitError {
 
     #[error("Target not found: {0}")]
     NotFound(String),
+
+    #[error("Invalid reference: {0}")]
+    InvalidReference(String),
+
+    #[error("Repository is in an invalid state: {0}")]
+    InvalidRepositoryState(String),
+
+    #[error("Operation not supported: {0}")]
+    Unsupported(String),
 }

@@ -21,6 +21,7 @@ branchflow-core = { path = "../branchflow-core" }
 [dev-dependencies]
 pretty_assertions = "1"
 branchflow-git = { path = "."}
+tempfile = "3"
 
 [features]
 default = []
