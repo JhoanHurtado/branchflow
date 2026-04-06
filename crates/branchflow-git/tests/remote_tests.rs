@@ -11,14 +11,18 @@ fn setup_remote_repo() -> (tempfile::TempDir, String) {
     // Init a temporary normal repo to create a commit
     let temp_repo_dir = tempdir().unwrap();
     let repo = git2::Repository::init(temp_repo_dir.path()).unwrap();
+    let mut opts = git2::RepositoryInitOptions::new();
+    opts.initial_head("main");
+    let repo = git2::Repository::init_opts(temp_repo_dir.path(), &opts).unwrap();
 
     // Create a commit
     let file_path = temp_repo_dir.path().join("file.txt");
-    File::create(&file_path).unwrap().write_all(b"data").unwrap();
-    let mut index = repo.index().unwrap();
-    index
-        .add_path(std::path::Path::new("file.txt"))
+    File::create(&file_path)
+        .unwrap()
+        .write_all(b"data")
         .unwrap();
+    let mut index = repo.index().unwrap();
+    index.add_path(std::path::Path::new("file.txt")).unwrap();
     index.write().unwrap();
     let tree_id = index.write_tree().unwrap();
     let tree = repo.find_tree(tree_id).unwrap();
@@ -61,9 +65,8 @@ fn test_list_remotes() {
     assert_eq!(remotes[0].name, "origin");
 
     // Add another remote
-    repo.inner
-        .remote("upstream", "http://example.com/repo.git")
-        .unwrap();
+    let raw_repo = git2::Repository::open(local_dir.path()).unwrap();
+    raw_repo.remote("upstream", "http://example.com/repo.git").unwrap();
     let remotes_after_add = list_remotes(&repo).unwrap();
     assert_eq!(remotes_after_add.len(), 2);
 }

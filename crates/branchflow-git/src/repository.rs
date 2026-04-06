@@ -1,5 +1,6 @@
 use crate::errors::GitError;
 use git2::Repository;
+use git2::{Repository, RepositoryInitOptions};
 use std::path::Path;
 
 pub struct GitRepository {
@@ -22,6 +23,9 @@ impl GitRepository {
     /// Inicializa un nuevo repositorio.
     pub fn init<P: AsRef<Path>>(path: P) -> Result<Self, GitError> {
         let repo = Repository::init(path).map_err(GitError::from)?;
+        let mut opts = RepositoryInitOptions::new();
+        opts.initial_head("main");
+        let repo = Repository::init_opts(path, &opts).map_err(GitError::from)?;
         Ok(Self { inner: repo })
     }
 

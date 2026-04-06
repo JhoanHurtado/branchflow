@@ -78,7 +78,7 @@ fn test_create_subsequent_commit() {
     let file_path2 = dir.path().join("file2.txt");
     File::create(&file_path2).unwrap().write_all(b"two").unwrap();
     stage_path(&repo, "file2.txt").unwrap();
-    let second_commit_id = create_commit(&repo, "Second", "Test", "test@example.com").unwrap();
+    let _second_commit_id = create_commit(&repo, "Second", "Test", "test@example.com").unwrap();
 
     let log = get_log(&repo, 2).unwrap();
     assert_eq!(log.len(), 2);

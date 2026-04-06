@@ -57,7 +57,9 @@ fn test_get_head_detached() {
     let commit_id = create_commit(&repo, "Initial", "Test", "test@example.com").unwrap();
 
     // Detach HEAD
-    repo.inner.set_head(&commit_id).unwrap();
+    let raw_repo = git2::Repository::open(dir.path()).unwrap();
+    let oid = git2::Oid::from_str(&commit_id).unwrap();
+    raw_repo.set_head_detached(oid).unwrap();
 
     let head_ref = get_head(&repo).unwrap();
     assert!(head_ref.name.is_none()); // Detached HEAD has no symbolic name

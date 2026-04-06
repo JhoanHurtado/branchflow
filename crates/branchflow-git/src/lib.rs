@@ -16,6 +16,7 @@ Architectural responsibilities:
 pub mod repository;
 pub mod commits;
 pub mod branches;
+pub mod references;
 pub mod index;
 pub mod working_tree;
 pub mod operations;
